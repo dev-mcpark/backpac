@@ -86,11 +86,11 @@ WSGI_APPLICATION = 'backpac.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # },
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-    'master': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'backpac',
         'USER': 'user',
@@ -98,7 +98,7 @@ DATABASES = {
         'HOST': 'db',
         'PORT': '3306',
     },
-    'slave': {
+    'read': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'backpac',
         'USER': 'user',

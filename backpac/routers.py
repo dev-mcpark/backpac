@@ -4,22 +4,22 @@ import random
 class MasterSlaveRouter(object):
     def db_for_read(self, model, **hints):
         """
-        Reads go to a randomly-chosen slave.
+        Reads go to a randomly-chosen read, default.
         """
-        return random.choice(['slave', 'master'])
+        return random.choice(['read', 'default'])
 
     def db_for_write(self, model, **hints):
         """
-        Writes always go to master.
+        Writes always go to default.
         """
-        return 'master'
+        return 'default'
 
     def allow_relation(self, obj1, obj2, **hints):
         """
         Relations between objects are allowed if both objects are
-        in the master/slave pool.
+        in the default/read pool.
         """
-        db_list = ('master', 'slave')
+        db_list = ('default', 'read')
         if obj1._state.db in db_list and obj2._state.db in db_list:
             return True
         return None
