@@ -1,22 +1,13 @@
-import re
-
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
 
 from app.models import Member, Order
-
-
-def regex_exists(pattern, value):
-    p = re.compile(pattern)
-    m = p.search(value)
-
-    if m:
-        return True
-    return False
+from app.utils import regex_exists
 
 
 class MyRegisterSerializer(RegisterSerializer):
     username = serializers.CharField(required=True)
+    email = serializers.EmailField(required=True)
     nickname = serializers.CharField(required=True)
     phone = serializers.CharField(required=True)
     gender = serializers.ChoiceField(choices=['M', 'F'], required=False)
@@ -39,10 +30,11 @@ class MyRegisterSerializer(RegisterSerializer):
                 regex_exists('[A-Z]+', password) and \
                 regex_exists('[0-9]+', password) and \
                 regex_exists('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', password):
+            return password
+        else:
             raise serializers.ValidationError(
                 "Contains one or more English uppercase letters, lowercase English letters, special characters, and numbers"
             )
-        return password
 
     def validate_phone(self, phone):
         # 숫자만 허용
@@ -56,6 +48,11 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = '__all__'
+        extra_kwargs = {
+            'user': {'read_only': True},
+            'order_number': {'read_only': True},
+            'product': {'write_only': True},
+        }
 
 
 class UserSerializer(serializers.ModelSerializer):

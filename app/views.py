@@ -7,6 +7,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 
 from app.filters import UserFilter
+from app.helper import make_unique_order_number
 from app.models import Member, Order
 from app.serializers import UserSerializer, OrderSerializer
 
@@ -43,3 +44,15 @@ class UserOrderListView(generics.ListAPIView):
         user = get_object_or_404(Member, pk=self.kwargs.get('pk'))
         queryset = queryset.filter(user=user)
         return queryset
+
+
+class OrderCreateView(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    serializer_class = OrderSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(
+            user=self.request.user,
+            order_number=make_unique_order_number()
+        )

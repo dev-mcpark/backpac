@@ -29,3 +29,5 @@ services:
       - DJANGO_SETTINGS_MODULE=backpac.settings
     depends_on:
       - db
+    links:
+      - db

@@ -212,3 +212,5 @@ fabric.properties
 .idea/sonarlint
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm
+
+mysql/
