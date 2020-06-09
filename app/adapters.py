@@ -5,8 +5,8 @@ from django import forms
 
 
 class MyAccountAdapter(DefaultAccountAdapter):
-    def clean_password(self, password):
-        if re.match(r'^(?=.*?\d)(?=.*?[A-Z])(?=.*?[a-z])[A-Za-z\d]{8,}$', password):
-            return password
-        else:
-            raise forms.ValidationError("Error message")
+
+    def save_user(self, request, user, form, commit=True):
+        user = super(MyAccountAdapter, self).save_user(request, user, form, commit)
+
+        return user

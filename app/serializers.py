@@ -58,7 +58,7 @@ class OrderSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
-        fields = '__all__'
+        fields = ['id', 'email', 'username', 'nickname', 'phone', 'gender']
 
     def to_representation(self, instance):
         res = super().to_representation(instance)

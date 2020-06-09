@@ -4,7 +4,7 @@ import random
 
 
 def random_number(length):
-    string_pool = string.ascii_letters + string.digits
+    string_pool = string.ascii_uppercase + string.digits
     result = ""
     for i in range(length):
         result += random.choice(string_pool)
