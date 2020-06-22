@@ -38,6 +38,7 @@ class UserOrderListView(generics.ListAPIView):
     authentication_classes = [TokenAuthentication]
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    pagination_class = MyPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()

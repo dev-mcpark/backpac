@@ -13,10 +13,10 @@ docker-compose run backpac python manage.py createsuperuser
 ```
 
 ---
-####api 문서
+#### api 문서
 > localhost:8000/docs/
 
-####주요 api 정리
+#### 주요 api 정리
 - 회원가입
 > POST /rest-auth/registration/
 >   > Request Body parameter
@@ -28,8 +28,14 @@ docker-compose run backpac python manage.py createsuperuser
 >   > * gender : 성별
 - 로그인
 > POST /rest_auth/login/
+>   > Request Body parameter
+>   > * username* : 이름
+>   > * email* : 이메일
+>   > * password1* : 패스워드
 - 로그아웃
 > POST /rest_auth/logout/
+>   > header
+>   > * Authorization : Token {token}
 - 회원 목록
 > GET /users
 >   > header
@@ -46,3 +52,10 @@ docker-compose run backpac python manage.py createsuperuser
 > GET /users/{id}/orders/
 >   > header
 >   > * Authorization : Token {token}
+- 주문 추가
+> POST /orders/
+>   > header
+>   > * Authorization : Token {token}
+
+>   > Request Body parameter
+>   > * product : 제품명

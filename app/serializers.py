@@ -43,6 +43,21 @@ class MyRegisterSerializer(RegisterSerializer):
 
         return phone
 
+    def custom_signup(self, request, user):
+        user.nickname = self.cleaned_data.get('nickname')
+        user.phone = self.cleaned_data.get('phone')
+        user.gender = self.cleaned_data.get('gender')
+        user.save()
+
+    def get_cleaned_data(self):
+        return {
+            'nickname': self.validated_data.get('nickname', ''),
+            'phone': self.validated_data.get('phone', ''),
+            'password1': self.validated_data.get('password1', ''),
+            'email': self.validated_data.get('email', ''),
+            'gender': self.validated_data.get('gender', ''),
+        }
+
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
